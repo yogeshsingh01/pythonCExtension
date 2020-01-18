@@ -9,7 +9,9 @@ This is a python module for showing Example to use python Extension
 
 ## Installing the latest release:
     $ python setup.py install
-    Make sure to have [Visual Studio 2015](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+
+## Note:	
+    Make sure to have [Visual Studio 2015](https://visualstudio.microsoft.com/visual-cpp-build-tools).
 
     If only want to build use "python setup.py build"
 

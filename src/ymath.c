@@ -10,6 +10,17 @@ unsigned long fastfactorial(unsigned int n)
 }
 
 
+/** Modify passed buffer */
+void modifybuffer(unsigned char *strptr, unsigned char length)
+{
+  while(length--)
+  {
+    *strptr++;
+    //strptr++;
+  }
+}
+
+
 /**
  * To use fastfactorial we need to create a wrapper
  */
@@ -29,6 +40,25 @@ static PyObject* factorial(PyObject* self, PyObject* args)
 }
 
 /**
+ * To use modifybuffer we need to create a wrapper
+ */
+static PyObject* IncBuffer(PyObject* self, PyObject* args)
+{
+    char *s;
+    int size;;
+
+    if (!PyArg_ParseTuple(args, "s*i", s,&size))
+        return NULL;
+    printf("In C \n");
+    while(size--)
+    {
+      printf("%c\n",*s++ );
+    }
+
+     Py_RETURN_NONE;
+}
+
+/**
  * Now we have to tell python what is our function for this PyMethodDef
  * comes in picture
  * This have four field i.e method name, function pointer, flags, docstring
@@ -37,6 +67,7 @@ static PyObject* factorial(PyObject* self, PyObject* args)
 static PyMethodDef mainMethods[] =
 {
   {"factorial",factorial,METH_VARARGS,"Calculate the factorial of n"},
+  {"IncBuffer",IncBuffer,METH_VARARGS,"Increment buffer by 1"},
   {NULL,NULL,0,NULL}
 };
 
@@ -47,7 +78,7 @@ static PyMethodDef mainMethods[] =
 static PyModuleDef ymath =
 {
  PyModuleDef_HEAD_INIT,
- "ymath","Factorial Calculation",
+ "ymath","Python C api extension example",
  -1,
  mainMethods
 };
