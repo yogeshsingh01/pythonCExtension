@@ -11,6 +11,8 @@ This is a python module for showing Example to use python Extension
     $ python setup.py install
     Make sure to have [Visual Studio 2015](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 
+    If only want to build use "python setup.py build"
+
 ## Module Documentation
 
 ymath.factorial(number)
@@ -19,56 +21,10 @@ ymath.factorial(number)
 ## Usage Example
 
 ```python
-import bchlib
-import hashlib
-import os
-import random
+import ymath
 
-# create a bch object
-BCH_POLYNOMIAL = 8219
-BCH_BITS = 16
-bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
+factorial = ymath.factorial(5)
 
-# random data
-data = bytearray(os.urandom(512))
+print(factorial)
 
-# encode and make a "packet"
-ecc = bch.encode(data)
-packet = data + ecc
-
-# print hash of packet
-sha1_initial = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_initial.hexdigest(),))
-
-def bitflip(packet):
-    byte_num = random.randint(0, len(packet) - 1)
-    bit_num = random.randint(0, 7)
-    packet[byte_num] ^= (1 << bit_num)
-
-# make BCH_BITS errors
-for _ in range(BCH_BITS):
-    bitflip(packet)
-
-# print hash of packet
-sha1_corrupt = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_corrupt.hexdigest(),))
-
-# de-packetize
-data, ecc = packet[:-bch.ecc_bytes], packet[-bch.ecc_bytes:]
-
-# correct
-bitflips = bch.decode_inplace(data, ecc)
-print('bitflips: %d' % (bitflips))
-
-# packetize
-packet = data + ecc
-
-# print hash of packet
-sha1_corrected = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_corrected.hexdigest(),))
-
-if sha1_initial.digest() == sha1_corrected.digest():
-    print('Corrected!')
-else:
-    print('Failed')
 ```

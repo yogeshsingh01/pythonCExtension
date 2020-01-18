@@ -1,0 +1,7 @@
+README.md
+setup.py
+src/ymath.c
+ymath.egg-info/PKG-INFO
+ymath.egg-info/SOURCES.txt
+ymath.egg-info/dependency_links.txt
+ymath.egg-info/top_level.txt
